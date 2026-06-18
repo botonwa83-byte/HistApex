@@ -1,0 +1,41 @@
+{
+  "identifier" : "7CF46C30-B402-49C6-88C2-76F0BCE5D6A8",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "22.00",
+      "familyShareable" : false,
+      "internalID" : "5CB5E721-49B8-4247-8849-D7714D3C6B92",
+      "localizations" : [
+        {
+          "description" : "一次买断，解锁历史登顶高中必修、选必、冲刺主线，高考权重套练，史料题题型池，时间轴宇宙、史料侦探、制度演变剧本、地图空间、武器雷达、Boss 双解和复习闭环。无订阅、无续费，支持恢复购买。",
+          "displayName" : "HistApex 完整版解锁",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.histapex.app.full_unlock",
+      "referenceName" : "完整功能解锁（一次性买断）",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "0",
+    "_developerTeamID" : "0",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "zh_CN",
+    "_storefront" : "CHN",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
