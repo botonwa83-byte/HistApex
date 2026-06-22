@@ -216,7 +216,7 @@ struct KnowledgePoint: Codable, Identifiable {
     }
     var commonTrapLines: [String] {
         var lines = explanation.commonTraps
-        if let pitfall, !pitfall.isEmpty {
+        if let pitfall, !pitfall.isEmpty, !lines.contains(pitfall) {
             lines.insert(pitfall, at: 0)
         }
         return lines

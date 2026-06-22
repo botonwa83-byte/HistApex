@@ -276,3 +276,25 @@ Goal: prepare for App Store submission.
 - 2026-06-18: Corrected practice expansion direction after audit: do not judge Gaokao alignment by raw question count. Added `SubjectiveQuestionType` and per-question score, split generated/authored practice pools, added authored high-school style questions, and made exam套练 prefer authored items while enforcing 48-point choice + 52-point non-choice score weight. Non-choice pool now covers measures, material analysis, significance, evaluation, and open inquiry, with UI chips showing type and score. Added tests for authored question validity, non-choice type coverage, and 52-point non-choice total. `xcodebuild ... test` passed 20 tests, 0 failures.
 - 2026-06-18: Final weak-point audit found the IAP plumbing already worked, but the purchase module lacked ChemApex-level value clarity. Reworked `PremiumContentPlan` and `PaywallView` to mirror ChemApex's hero + benefit rows + one-time unlock CTA while using HistApex-specific assets: Gaokao-ratio套练, non-choice question type pool, material answer factory, subject matrix, weapon library, Boss dual solutions, and review loop. Updated `HistApex.storekit` product copy, added DEBUG local unlock toggle, and added premium-plan tests requiring 48/52 and non-choice type messaging. `xcodebuild ... test` passed 21 tests, 0 failures.
 - Next: continue adding questions by topic, but prioritize non-choice题型广度 and分值权重 first: every new wave should add fewer choice questions and more material/措施/意义/评析/开放探究题, keep `ExamPracticeBlueprint` passing, and keep IAP value copy focused on purchasable training assets instead of raw content counts.
+
+## 2026-06-22 上线前内容核查与第一轮付费 S 级精修
+
+Audit finding: `hasDeepExplanation`/`testPrioritySPointsHaveDeepExplanations` 等测试只检查字段非空，而 `MainLineData.kp()` 的通用兜底模板本身就会填满这些字段，所以此前显示的"S/A 100% 深度覆盖"是假阳性。精确统计后，112 个知识点中只有 17 个真正人工精修（`AuthoredKnowledgeData.explanations`），其余约 85% 是换标题的模板内容；选择性必修三本书（国家制度/经济与社会/文化交流）合计只压缩进 3 个节点 12 个知识点，经济与社会生活模块当时是 0 个人工精修、0 道人工非选择题。另发现 `kp()` 生成 `detail`/`pitfall` 时永远使用通用模板字符串，即使该知识点已被人工精修也不会跟着换——而 `detail` 正是 `AscentPathView` 主线详情页直接展示的文本。
+
+用户决策：本轮先补付费内容（必修10-21、选择性必修22-26、冲刺27-28）再补免费层（初中节点1-9）；选择性必修的结构性扩容（拆分出更多节点）本轮不做，作为下一轮单独立项。
+
+第一轮（本轮）完成内容：
+
+- 修复 `MainLineData.kp()`：`detail`/`pitfall` 现在优先取精修内容的 `mustRecite.first`/`commonTraps.first`，不再永远显示通用模板；`KnowledgePoint.commonTrapLines` 加了去重判断避免 pitfall 和 commonTraps 首句重复。
+- 新增反模板测试 `testEveryAuthoredKnowledgePointAvoidsGenericTemplateShell`，对所有标记为"已精修"的知识点断言不含通用模板固定句式，防止后续再退化成假阳性。
+- 把付费 S 级知识点的人工精修从 17 个提升到 43 个（覆盖全部 26 个本轮目标付费 S 点：先秦秦汉隋唐宋元明清剩余点、晚清到新中国剩余点、新航路到二战剩余点、国家制度/经济与社会/文化交流全部 S 点、史料方法和史观、选择题陷阱和史料小论文方法点）。
+- 人工选择题从 17 道增加到 36 道，人工非选择题从 8 道增加到 9 道（economySociety 历史上首次有人工非选择题 `asq_econ_01`）。
+- 顺带修正一处既有数据 bug：`aq_method_02`（现代化史观选择题）此前误挂在知识点 `k2601`（革命史观）上，已改挂回 `k2602`。
+- `xcodebuild test`（iPhone 17 模拟器）全程保持 38/38 通过。
+
+下一轮待办（未在本轮展开）：
+
+- 付费 A 级知识点剩余约 25 个（56 个 A 点中已精修 31 个：5 个历史遗留 + 本轮未涉及 A 点；需要重新核对具体清单）仍是模板内容。
+- 免费层（初中节点1-9，18 个 S 点 + 对应 A 点）全部还是模板内容，本轮按优先级决策推后。
+- 选择性必修结构性扩容（国家制度/经济与社会/文化交流各从 1 个节点拆到 2-3 个节点）未做，需要单独评估对 28 关总数、免费/付费边界、Boss 映射等下游代码的影响。
+- App Store 上架还缺隐私政策/服务条款/支持页文档（repo 内未发现 `docs/` 目录）。

@@ -264,6 +264,39 @@ final class HistApexTests: XCTestCase {
         XCTAssertTrue(MainLineData.knowledge(id: "k2803")?.explanation.answerTemplate.joined().contains("观点") == true)
     }
 
+    func testEveryAuthoredKnowledgePointAvoidsGenericTemplateShell() {
+        // 通用兜底模板（MainLineData.explanation(title:topic:weapon:)）里的固定句式，
+        // 真正人工精修的知识点不应再出现这些字样，否则说明又退化成了换标题的空壳。
+        let genericMarkers = [
+            "材料题要先看出处、时间、立场和关键词",
+            "历史高分不是背孤立事件",
+            "答题必须同时写史实、因果和影响，不能只写单句结论",
+            "复习时要放进具体时代背景，说明原因、过程、影响",
+            "历史题不能只背结论，必须交代时空背景、材料依据和因果链"
+        ]
+
+        XCTAssertGreaterThanOrEqual(AuthoredKnowledgeData.explanations.count, 17,
+                                    "人工精修知识点数量异常，可能被误删")
+
+        for id in AuthoredKnowledgeData.explanations.keys {
+            guard let point = MainLineData.knowledge(id: id) else {
+                XCTFail("人工精修考点 \(id) 没有对应主线知识点")
+                continue
+            }
+            let explanationText = ([point.explanation.plainExplanation]
+                + point.explanation.mustRecite
+                + point.explanation.answerTemplate
+                + point.explanation.sampleAnswerSentences).joined(separator: " ")
+            for marker in genericMarkers {
+                XCTAssertFalse(explanationText.contains(marker), "考点 \(id) 的精修讲解仍残留通用模板句式：\(marker)")
+                XCTAssertFalse(point.detail.contains(marker), "考点 \(id) 的 detail 仍是通用模板，没有跟随精修内容")
+            }
+            // detail/pitfall 必须来自精修内容首句，而不是 kp() 里的通用兜底字符串
+            XCTAssertEqual(point.detail, point.explanation.mustRecite.first, "考点 \(id) 的 detail 没有跟随 mustRecite 首句")
+            XCTAssertEqual(point.pitfall, point.explanation.commonTraps.first, "考点 \(id) 的 pitfall 没有跟随 commonTraps 首句")
+        }
+    }
+
     func testBossDuelReferencesResolveAndAreFaster() {
         XCTAssertGreaterThanOrEqual(BossDuelData.all.count, 15, "Boss Duel 数量不足，不能只保留少量示例")
         let ids = BossDuelData.all.map(\.id)

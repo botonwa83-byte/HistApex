@@ -81,7 +81,7 @@
 		908F423B01F09FED8124F2B1 /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		952BB32D892AE73AF96060EA /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		9620D1C1225D48802CB3C53C /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
-		A2309FFB858EC56EAF4462E5 /* HistApex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HistApex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2309FFB858EC56EAF4462E5 /* HistApex.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = HistApex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A29404703B97E345EF257C9E /* HistoryEncounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryEncounterView.swift; sourceTree = "<group>"; };
 		A2D716070DC581B3D6832D41 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		AEF5D07AFD7A95D750DC6722 /* HistContentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistContentData.swift; sourceTree = "<group>"; };
@@ -322,6 +322,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = A5F71CB985203258FA8EEDED /* Build configuration list for PBXProject "HistApex" */;
 			developmentRegion = en;
@@ -482,7 +484,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z7F8BY55DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = HistApex;
@@ -507,7 +508,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = Z7F8BY55DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = HistApex;

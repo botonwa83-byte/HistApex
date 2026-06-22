@@ -68,15 +68,17 @@ enum MainLineData {
         let id = "k\(String(format: "%02d", nodeOrder))\(String(format: "%02d", item))"
         let grade: ImportanceGrade = item <= 2 ? .s : .a
         let type: MemoryCardType = item == 1 ? .original : (item == 2 ? .boundary : (item == 3 ? .scene : .template))
-        let detail = "\(title) 是 \(topic.name) 的高频考点。复习时要放进具体时代背景，说明原因、过程、影响，并能用史料证据支撑判断。"
+        let genericDetail = "\(title) 是 \(topic.name) 的高频考点。复习时要放进具体时代背景，说明原因、过程、影响，并能用史料证据支撑判断。"
+        let genericPitfall = "历史题不能只背结论，必须交代时空背景、材料依据和因果链。"
+        let authored = AuthoredKnowledgeData.explanations[id]
         return KnowledgePoint(id: id,
                               title: title,
-                              detail: detail,
+                              detail: authored?.mustRecite.first ?? genericDetail,
                               grade: grade,
                               cardType: type,
-                              pitfall: "历史题不能只背结论，必须交代时空背景、材料依据和因果链。",
+                              pitfall: authored?.commonTraps.first ?? genericPitfall,
                               keywords: [title, topic.name, weapon.name],
-                              explanation: AuthoredKnowledgeData.explanations[id] ?? explanation(title: title, topic: topic, weapon: weapon))
+                              explanation: authored ?? explanation(title: title, topic: topic, weapon: weapon))
     }
 
     private static func explanation(title: String, topic: HistoryTopic, weapon: HistoryWeapon) -> KnowledgeExplanation {
