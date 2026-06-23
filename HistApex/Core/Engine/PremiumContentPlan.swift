@@ -38,9 +38,9 @@ enum PremiumContentPlan {
             ),
             PremiumPillar(
                 icon: "pencil.and.list.clipboard",
-                title: "高考比例套练",
-                detail: "按 48 分选择题 + 52 分非选择题组织训练，不用题目数量冒充分值权重。",
-                metric: "48/52"
+                title: "\(ExamPracticeData.all.count) 套高考比例套练",
+                detail: "每套都按 48 分选择题 + 52 分非选择题组织训练，不用题目数量冒充分值权重。",
+                metric: "\(ExamPracticeData.all.count) 套 · 48/52"
             ),
             PremiumPillar(
                 icon: "text.append",

@@ -30,6 +30,7 @@
 		7CCDC735343712F052967657 /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 908F423B01F09FED8124F2B1 /* ThemeColors.swift */; };
 		89F1B20C23546248CB58AEE5 /* TrapDrillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5690EF9C11075F0E918713ED /* TrapDrillView.swift */; };
 		8A140664019955FD20EBD187 /* ReviewScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7027DAE78863AB2D07F92A /* ReviewScheduler.swift */; };
+		96586CB6EC5245AD32558972 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = BBFD34147879028DADB414FA /* PrivacyInfo.xcprivacy */; };
 		9AB7E488CA7E8F6D0174785E /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952BB32D892AE73AF96060EA /* ReviewView.swift */; };
 		A6F412E250B3758832ACB050 /* HistApexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F881603A4EDDFAF5422BA7 /* HistApexApp.swift */; };
 		A86637216DE0C6C5D71DC6C4 /* ExamPracticeBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E6C1FA26705D227C36FF60 /* ExamPracticeBlueprint.swift */; };
@@ -88,6 +89,7 @@
 		B01927FDFD45854B3B137081 /* HistApexTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HistApexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E6C1FA26705D227C36FF60 /* ExamPracticeBlueprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamPracticeBlueprint.swift; sourceTree = "<group>"; };
 		BBA3DEAB81FAE44AC04D9357 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		BBFD34147879028DADB414FA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		C2F035760175262560AC7C89 /* PromoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoView.swift; sourceTree = "<group>"; };
 		CEDF0DC1878B16EF71C1A3DC /* AuthoredPracticeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthoredPracticeData.swift; sourceTree = "<group>"; };
 		D75C2700A11B730CCE8E96B9 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		25B2271C89A91DB482192D86 /* HistApex */ = {
 			isa = PBXGroup;
 			children = (
+				BBFD34147879028DADB414FA /* PrivacyInfo.xcprivacy */,
 				770F0B6FE3F4FD1D9296A9BB /* App */,
 				2FDDCFD02C78AECA74EB01B1 /* Core */,
 				B04A7D31C9A1418EA256D325 /* Features */,
@@ -323,6 +326,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					22F6520281797DC565ED5935 = {
+						DevelopmentTeam = Z7F8BY55DS;
+					};
 				};
 			};
 			buildConfigurationList = A5F71CB985203258FA8EEDED /* Build configuration list for PBXProject "HistApex" */;
@@ -351,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BFCCF4C3F7A36A92AB18D1D /* Assets.xcassets in Resources */,
+				96586CB6EC5245AD32558972 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +491,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z7F8BY55DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = HistApex;
@@ -508,6 +516,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z7F8BY55DS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = HistApex;

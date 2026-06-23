@@ -49,3 +49,4 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
         INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         ENABLE_PREVIEWS: YES
+        DEVELOPMENT_TEAM: Z7F8BY55DS

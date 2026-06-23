@@ -457,7 +457,7 @@ struct NodeDetailView: View {
     }
 }
 
-private struct KnowledgePointStudyCard: View {
+struct KnowledgePointStudyCard: View {
     let point: KnowledgePoint
     @State private var selectedBlock: StudyBlock = .recite
 

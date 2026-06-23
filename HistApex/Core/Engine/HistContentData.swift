@@ -254,12 +254,15 @@ enum SubjectiveQuestionData {
     private static func subjectiveScene(node: LearningNode, point: KnowledgePoint, index: Int) -> SubjectiveScene {
         let trigger = point.explanation.triggerScenes.first ?? "材料信息"
         let baseAnswers = point.sampleAnswerSentences + point.explanation.answerTemplate
+        // 材料直接取自该考点的必背史实，而不是泛泛描述材料里"会有什么"，
+        // 这样材料和采分点共用同一套真实内容，不再各说各话。
+        let factualMaterial = "材料：" + point.mustReciteLines.joined(separator: " ")
         switch (node.order + index) % 5 {
         case 0:
             return SubjectiveScene(
                 type: .materialAnalysis,
                 score: 13,
-                material: "材料摘录了与\(point.title)相关的时间、主体行动和评价语句，其中“\(trigger)”提示了命题切入点。",
+                material: factualMaterial,
                 prompt: "根据材料并结合所学，概括「\(point.title)」反映的历史变化。",
                 answerPoints: [
                     "答案：\(point.title)反映的是\(node.title)中\(node.topic.name)由旧格局向新阶段调整的变化。",
@@ -271,7 +274,7 @@ enum SubjectiveQuestionData {
             return SubjectiveScene(
                 type: .measure,
                 score: 13,
-                material: "材料显示\(node.title)阶段出现新的矛盾和现实需求，相关主体围绕\(point.title)采取行动。",
+                material: factualMaterial,
                 prompt: "结合材料和所学，分析「\(point.title)」出现或推进的背景原因。",
                 answerPoints: [
                     "答案：\(point.title)出现或推进的原因，应从\(node.title)的现实矛盾、主体行动和\(node.topic.name)发展的需要三层回答。",
@@ -283,7 +286,7 @@ enum SubjectiveQuestionData {
             return SubjectiveScene(
                 type: .significance,
                 score: 14,
-                material: "材料从当时影响和后世评价两个层面呈现\(point.title)，体现其对\(node.topic.name)的作用。",
+                material: factualMaterial,
                 prompt: "结合材料和所学，说明「\(point.title)」的历史影响。",
                 answerPoints: [
                     "答案：\(point.title)的影响要分当时和长远两层：当时回应\(node.title)中的现实问题，长远改变相关制度、经济、思想或世界联系。",
@@ -295,7 +298,7 @@ enum SubjectiveQuestionData {
             return SubjectiveScene(
                 type: .evaluation,
                 score: 13,
-                material: "材料给出关于\(point.title)的不同评价：一种强调历史作用，另一种提示局限和时代条件。",
+                material: factualMaterial,
                 prompt: "评析材料中关于「\(point.title)」的观点。",
                 answerPoints: [
                     "答案：评价\(point.title)不能简单肯定或否定，应先指出材料观点，再结合\(node.title)说明其历史作用和局限。",
@@ -307,7 +310,7 @@ enum SubjectiveQuestionData {
             return SubjectiveScene(
                 type: .openInquiry,
                 score: 12,
-                material: "围绕“\(node.title)”主题，材料提供了\(point.title)及相关史实作为论证资源。",
+                material: factualMaterial,
                 prompt: "围绕「\(point.title)」自拟论题，并用两个以上史实加以论证。",
                 answerPoints: [
                     "答案：可立论题为“\(point.title)推动或体现了\(node.title)中的阶段转型”。",
@@ -602,6 +605,10 @@ enum ConceptGraphData {
 
     static func related(to id: String) -> [ConceptEdge] { edges.filter { $0.from == id || $0.to == id } }
     static func concept(id: String) -> ConceptNode? { nodes.first { $0.id == id } }
+    static func knowledgePoints(for conceptId: String) -> [KnowledgePoint] {
+        guard let nodeId = conceptId.split(separator: "_").last.map(String.init) else { return [] }
+        return MainLineData.node(id: nodeId)?.knowledgePoints ?? []
+    }
 }
 
 enum WeaponGuideData {

@@ -59,11 +59,24 @@ final class HistApexTests: XCTestCase {
         XCTAssertTrue(types.contains(.significance))
         XCTAssertTrue(types.contains(.evaluation))
         XCTAssertTrue(types.contains(.openInquiry))
-        XCTAssertLessThan(generated.filter { $0.material.hasPrefix("材料围绕") }.count,
-                          generated.count / 5,
-                          "生成主观题仍像统一材料模板")
         XCTAssertGreaterThan(Set(generated.map(\.prompt)).count, MainLineData.allKnowledgePoints.count / 2,
                              "生成主观题设问重复度过高")
+
+        let metaLanguageMarkers = ["材料围绕", "材料摘录了与", "材料显示", "材料从当时影响和后世评价两个层面呈现", "材料给出关于"]
+        for question in generated {
+            for marker in metaLanguageMarkers {
+                XCTAssertFalse(question.material.contains(marker),
+                               "生成主观题 \(question.id) 材料仍是描述材料本身的元语言，没有真正引用精修内容：\(marker)")
+            }
+            guard let point = MainLineData.knowledge(id: question.knowledgeId) else {
+                XCTFail("生成主观题 \(question.id) 引用了不存在的考点")
+                continue
+            }
+            XCTAssertTrue(point.mustReciteLines.contains { question.material.contains($0) },
+                          "生成主观题 \(question.id) 材料没有使用该考点的必背史实内容")
+        }
+        XCTAssertGreaterThan(Set(generated.map(\.material)).count, MainLineData.allKnowledgePoints.count / 2,
+                             "生成主观题材料重复度过高")
     }
 
     func testNodePracticeIdsResolveFullCoverage() {

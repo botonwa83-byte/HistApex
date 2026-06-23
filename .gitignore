@@ -39,8 +39,5 @@ fastlane/test_output
 ## Sourcery
 .generated/
 
-## Documentation
-docs/
-
 ## Personal
 .claude-memory/

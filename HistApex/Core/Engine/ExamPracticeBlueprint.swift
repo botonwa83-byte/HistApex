@@ -34,7 +34,7 @@ enum ExamPracticeBlueprint {
     static let subjectiveQuestionSlots: [(topic: HistoryTopic, type: SubjectiveQuestionType, score: Int)] = [
         (.ancientChina, .materialAnalysis, 13),
         (.modernChina, .measure, 13),
-        (.worldHistory, .significance, 14),
+        (.worldHistory, .evaluation, 14),
         (.sprint, .openInquiry, 12)
     ]
 }

@@ -114,11 +114,11 @@ struct TrainingView: View {
 
     private var examPracticeSection: some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
-            SectionHeader(title: "高考比例套练", systemImage: "doc.text.magnifyingglass", accent: .apexLava)
+            SectionHeader(title: "高考比例套练（共 \(ExamPracticeData.all.count) 套）", systemImage: "doc.text.magnifyingglass", accent: .apexLava)
             HStack(spacing: Spacing.md) {
+                stat("\(ExamPracticeData.all.count)", "套练总数", .apexLava)
                 stat("\(ExamPracticeBlueprint.choiceScore)", "选择题分", .apexBlue)
                 stat("\(ExamPracticeBlueprint.subjectiveScore)", "非选择分", .apexRed)
-                stat("\(ExamPracticeBlueprint.choiceQuestionCount)+\(ExamPracticeBlueprint.subjectiveQuestionCount)", "题型结构", .apexGold)
             }
             Text(ExamPracticeBlueprint.sourceNote)
                 .font(.caption)
@@ -149,6 +149,14 @@ struct TrainingView: View {
                 }
                 .buttonStyle(.plain)
             }
+            NavigationLink { ExamPracticeListView() } label: {
+                compactActionRow(icon: "square.stack.3d.up",
+                                 title: "查看全部 \(ExamPracticeData.all.count) 套高考比例套练",
+                                 subtitle: "每套都按 \(ExamPracticeBlueprint.choiceQuestionCount) 道选择题 + \(ExamPracticeBlueprint.subjectiveQuestionCount) 道非选择题的高考结构组织。",
+                                 value: "\(ExamPracticeData.all.count)",
+                                 color: .apexLava)
+            }
+            .buttonStyle(.plain)
         }
     }
 
@@ -608,6 +616,60 @@ struct BossDuelListView: View {
         .background(Color.apexBackground.ignoresSafeArea())
         .navigationTitle("Boss 对决")
         .sheet(isPresented: $showPaywall) { PaywallView() }
+    }
+}
+
+struct ExamPracticeListView: View {
+    var body: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: Spacing.md) {
+                VStack(alignment: .leading, spacing: Spacing.sm) {
+                    Text(ExamPracticeBlueprint.sourceNote)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                    HStack(spacing: Spacing.md) {
+                        Text("\(ExamPracticeData.all.count)")
+                            .font(AppFont.stat(24))
+                            .foregroundColor(.apexLava)
+                        Text("套，每套选择题 \(ExamPracticeBlueprint.choiceScore) 分 + 非选择题 \(ExamPracticeBlueprint.subjectiveScore) 分，共 \(ExamPracticeBlueprint.totalScore) 分")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .cardSurface()
+
+                ForEach(Array(ExamPracticeData.all.enumerated()), id: \.element.id) { index, set in
+                    NavigationLink { ExamPracticeSetView(set: set) } label: {
+                        HStack(spacing: Spacing.md) {
+                            Image(systemName: "timer")
+                                .font(.title3)
+                                .frame(width: 42, height: 42)
+                                .background(Color.apexLava.opacity(0.12))
+                                .foregroundColor(.apexLava)
+                                .clipShape(RoundedRectangle(cornerRadius: Radius.inner))
+                            VStack(alignment: .leading, spacing: 3) {
+                                Text(set.title)
+                                    .font(AppFont.cardTitle)
+                                    .foregroundColor(.primary)
+                                Text("第 \(index + 1) 套 · 选择题 \(set.choiceScore) 分 + 非选择题 \(set.subjectiveScore) 分")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer(minLength: 0)
+                            Image(systemName: "chevron.right")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                        .cardSurface()
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(Spacing.lg)
+            .readableWidth()
+        }
+        .background(Color.apexBackground.ignoresSafeArea())
+        .navigationTitle("高考比例套练")
     }
 }
 
